@@ -13,9 +13,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Set up Docker
-      uses: actions/setup-docker@v
+      uses: actions/setup-docker@v1
     - name: Run Terraform in Docker
       run: |
-        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest init
-        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest plan
-        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest apply -auto-approve
+        docker run --rm -v ${{ github.workspace }}/s3-local-tf:/workspace -w /workspace hashicorp/terraform:latest init
+        docker run --rm -v ${{ github.workspace }}/s3-local-tf:/workspace -w /workspace hashicorp/terraform:latest plan
+        docker run --rm -v ${{ github.workspace }}/s3-local-tf:/workspace -w /workspace hashicorp/terraform:latest apply -auto-approve
