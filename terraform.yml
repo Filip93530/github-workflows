@@ -1,0 +1,21 @@
+name: Terraform CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Set up Docker
+      uses: actions/setup-docker@v
+    - name: Run Terraform in Docker
+      run: |
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest init
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest plan
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:latest apply -auto-approve
